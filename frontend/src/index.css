@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Segoe UI', system-ui, Roboto, sans-serif;
+  --color-tavern-900: #120d08;
+  --color-tavern-800: #1d1611;
+  --color-tavern-700: #2a1f17;
+  --color-gold: #d4af37;
+  --color-gold-light: #e8cd6f;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-tavern-900);
+  color: #f3ede4;
+}
