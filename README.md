@@ -116,3 +116,11 @@ npm run dev                      # http://localhost:5173
 
 - **Backend:** Render or Railway (set `DJANGO_DEBUG=False`, real `DJANGO_ALLOWED_HOSTS`, managed Postgres)
 - **Frontend:** Vercel or Netlify (set `VITE_API_BASE_URL` to the deployed API)
+
+## Container & Deployment Specification
+
+The repository now includes a deployment-oriented implementation spec in [docs/project-spec.md](docs/project-spec.md), plus Docker and CI/CD scaffolding for the three major layers:
+
+- `docker-compose.yml` for frontend, backend, and PostgreSQL
+- `backend/Dockerfile` and `frontend/Dockerfile`
+- `.github/workflows/deploy.yml` for backend and frontend deployment automation

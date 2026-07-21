@@ -5,7 +5,9 @@ backend/*.sqlite3
 backend/staticfiles/
 backend/media/
 backend/.env
+backend/.env.docker
 !backend/.env.example
+!backend/.env.docker.example
 
 frontend/node_modules/
 frontend/dist/
