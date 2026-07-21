@@ -117,6 +117,77 @@ npm run dev                      # http://localhost:5173
 - **Backend:** Render or Railway (set `DJANGO_DEBUG=False`, real `DJANGO_ALLOWED_HOSTS`, managed Postgres)
 - **Frontend:** Vercel or Netlify (set `VITE_API_BASE_URL` to the deployed API)
 
+## Database Diagram
+
+```mermaid
+erDiagram
+    USER ||--o{ POSTER : creates
+    USER ||--o{ BUNDLE_REDEMPTION : redeems
+    USER ||--o{ SOCIAL_ENGAGEMENT_LOG : logs
+
+    EVENT ||--o{ POSTER : linked_to
+    BUNDLE ||--o{ BUNDLE_REDEMPTION : has
+
+    USER {
+        bigint id PK
+        string username
+        string email
+        boolean is_staff
+        boolean is_superuser
+    }
+
+    EVENT {
+        bigint id PK
+        string title
+        string unit
+        string event_type
+        datetime start_datetime
+        datetime end_datetime
+        boolean is_published
+    }
+
+    BUNDLE {
+        bigint id PK
+        string name
+        string slug
+        text description
+        text whatsapp_message_template
+        boolean is_active
+    }
+
+    BUNDLE_REDEMPTION {
+        bigint id PK
+        bigint bundle_id FK
+        bigint redeemed_by FK
+        string customer_name
+        string customer_phone
+        decimal revenue_amount
+        datetime redeemed_at
+    }
+
+    POSTER {
+        bigint id PK
+        bigint linked_event_id FK
+        bigint created_by FK
+        string title
+        string unit
+        string status
+        string platform
+        string headline_text
+        string subtext
+    }
+
+    SOCIAL_ENGAGEMENT_LOG {
+        bigint id PK
+        bigint logged_by FK
+        string unit
+        string platform
+        date date
+        int reach
+        int engagement
+    }
+```
+
 ## Container & Deployment Specification
 
 The repository now includes a deployment-oriented implementation spec in [docs/project-spec.md](docs/project-spec.md), plus Docker and CI/CD scaffolding for the three major layers:
