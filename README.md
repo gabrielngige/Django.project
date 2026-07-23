@@ -49,6 +49,16 @@ A data-driven, automated monorepo platform built for **109 Tavern Restaurant, Ca
 - Python 3.10+
 - Node.js LTS
 - PostgreSQL running locally
+- Docker and Docker Compose (optional, for the containerized setup)
+
+### Quick Start with Docker
+If you prefer the containerized workflow, start the full stack from the repository root:
+
+```bash
+docker compose up --build
+```
+
+This launches the Django API, React frontend, and PostgreSQL service with the project’s Docker configuration.
 
 ### 1. Database
 Create a database and, ideally, a dedicated role:

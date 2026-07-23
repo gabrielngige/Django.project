@@ -1,17 +1,39 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
 backend/venv/
 backend/__pycache__/
 backend/**/__pycache__/
-backend/*.sqlite3
 backend/staticfiles/
 backend/media/
 backend/.env
 backend/.env.docker
-!backend/.env.example
-!backend/.env.docker.example
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.coverage
+backend/htmlcov/
 
+# Frontend / Vite
 frontend/node_modules/
 frontend/dist/
 frontend/.env
-!frontend/.env.example
+frontend/.vite/
+frontend/coverage/
 
+# Editor / OS
 .DS_Store
+.vscode/
+.idea/
+
+!backend/.env.example
+!backend/.env.docker.example
+!frontend/.env.example
