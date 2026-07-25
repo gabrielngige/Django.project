@@ -93,7 +93,21 @@ jobs:
     needs: frontend-build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Trigger frontend deployment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
-          npx vercel --prod --token "${{ secrets.VERCEL_TOKEN }}" --scope "${{ secrets.VERCEL_ORG_ID }}" --project "${{ secrets.VERCEL_PROJECT_ID }}"
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::warning::One or more Vercel secrets (VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID) are not configured. Skipping Vercel deployment."
+            exit 0
+          fi
+          npx vercel --prod --token "$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID" --project "$VERCEL_PROJECT_ID"
