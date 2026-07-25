@@ -1,3 +1,4 @@
+import importlib
 import pytest
 from decimal import Decimal
 from django.utils import timezone
@@ -9,6 +10,30 @@ from core_api.models import (
     Offering, Event, Bundle, BundleRedemption,
     GalleryImage, Poster, SocialEngagementLog
 )
+
+
+def test_test_settings_database_uses_environment_overrides(monkeypatch):
+    from tavern_core import test_settings
+
+    with monkeypatch.context() as patched_env:
+        patched_env.setenv('DB_NAME', 'ci_db')
+        patched_env.setenv('DB_USER', 'ci_user')
+        patched_env.setenv('DB_PASSWORD', 'ci_password')
+        patched_env.setenv('DB_HOST', 'db-service')
+        patched_env.setenv('DB_PORT', '5432')
+
+        reloaded_settings = importlib.reload(test_settings)
+
+        assert reloaded_settings.DATABASES['default'] == {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ci_db',
+            'USER': 'ci_user',
+            'PASSWORD': 'ci_password',
+            'HOST': 'db-service',
+            'PORT': '5432',
+        }
+
+    importlib.reload(test_settings)
 
 
 @pytest.fixture
