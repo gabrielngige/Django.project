@@ -1,5 +1,5 @@
-import importlib.util
 import pytest
+import runpy
 from decimal import Decimal
 from pathlib import Path
 from django.utils import timezone
@@ -23,12 +23,9 @@ def test_test_settings_database_uses_environment_overrides(monkeypatch):
         patched_env.setenv('DB_HOST', 'db-service')
         patched_env.setenv('DB_PORT', '5432')
 
-        module_spec = importlib.util.spec_from_file_location('test_settings_for_ci', settings_path)
-        test_settings_module = importlib.util.module_from_spec(module_spec)
-        assert module_spec.loader is not None
-        module_spec.loader.exec_module(test_settings_module)
+        test_settings_module = runpy.run_path(str(settings_path))
 
-        assert test_settings_module.DATABASES['default'] == {
+        assert test_settings_module['DATABASES']['default'] == {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'ci_db',
             'USER': 'ci_user',
