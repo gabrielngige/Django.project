@@ -8,8 +8,9 @@ from decouple import config
 
 from tavern_core.settings import *
 
-DATABASES = {
-    'default': {
+
+def build_test_database_settings():
+    return {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME', default='tavern109_db_test'),
         'USER': config('DB_USER', default='tavern109'),
@@ -17,6 +18,10 @@ DATABASES = {
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='5433'),
     }
+
+
+DATABASES = {
+    'default': build_test_database_settings()
 }
 
 # Speed up tests by disabling password validation

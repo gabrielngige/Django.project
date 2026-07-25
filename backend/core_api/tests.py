@@ -1,7 +1,5 @@
 import pytest
-import runpy
 from decimal import Decimal
-from pathlib import Path
 from django.utils import timezone
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
@@ -14,25 +12,27 @@ from core_api.models import (
 
 
 def test_test_settings_database_uses_environment_overrides(monkeypatch):
-    settings_path = Path(__file__).resolve().parent.parent / 'tavern_core' / 'test_settings.py'
+    from tavern_core import test_settings
 
-    with monkeypatch.context() as patched_env:
-        patched_env.setenv('DB_NAME', 'ci_db')
-        patched_env.setenv('DB_USER', 'ci_user')
-        patched_env.setenv('DB_PASSWORD', 'ci_password')
-        patched_env.setenv('DB_HOST', 'db-service')
-        patched_env.setenv('DB_PORT', '5432')
+    def fake_config(name, default=None):
+        return {
+            'DB_NAME': 'ci_db',
+            'DB_USER': 'ci_user',
+            'DB_PASSWORD': 'ci_password',
+            'DB_HOST': 'db-service',
+            'DB_PORT': '5432',
+        }.get(name, default)
 
-        test_settings_module = runpy.run_path(str(settings_path))
+    monkeypatch.setattr(test_settings, 'config', fake_config)
 
-        assert test_settings_module['DATABASES']['default'] == {
+    assert test_settings.build_test_database_settings() == {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'ci_db',
             'USER': 'ci_user',
             'PASSWORD': 'ci_password',
             'HOST': 'db-service',
             'PORT': '5432',
-        }
+    }
 
 
 @pytest.fixture
