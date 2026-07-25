@@ -4,6 +4,8 @@ Inherits from main settings and defaults to local Docker PostgreSQL while
 allowing CI to override connection details via environment variables.
 """
 
+from decouple import config
+
 from tavern_core.settings import *
 
 DATABASES = {

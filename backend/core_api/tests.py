@@ -15,6 +15,11 @@ from core_api.models import (
 def test_test_settings_database_uses_environment_overrides(monkeypatch):
     from tavern_core import test_settings
 
+    original_database_settings = {
+        key: test_settings.DATABASES['default'][key]
+        for key in ('ENGINE', 'NAME', 'USER', 'PASSWORD', 'HOST', 'PORT')
+    }
+
     with monkeypatch.context() as patched_env:
         patched_env.setenv('DB_NAME', 'ci_db')
         patched_env.setenv('DB_USER', 'ci_user')
@@ -33,7 +38,11 @@ def test_test_settings_database_uses_environment_overrides(monkeypatch):
             'PORT': '5432',
         }
 
-    importlib.reload(test_settings)
+    restored_settings = importlib.reload(test_settings)
+    assert {
+        key: restored_settings.DATABASES['default'][key]
+        for key in original_database_settings
+    } == original_database_settings
 
 
 @pytest.fixture
