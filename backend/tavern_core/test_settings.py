@@ -4,7 +4,7 @@ Inherits from main settings and uses the same database environment variables.
 Wildcard import is intentional so Django receives the complete base settings module.
 """
 
-from tavern_core.settings import *  # noqa: F403
+from tavern_core.settings import *  # noqa: F401, F403
 
 # Speed up tests by disabling password validation
 AUTH_PASSWORD_VALIDATORS = []

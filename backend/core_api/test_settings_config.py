@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 
-def test_settings_respect_database_environment():
+def test_settings_respects_database_environment():
     backend_dir = Path(__file__).resolve().parents[1]
     env = os.environ.copy()
     database_env = {
