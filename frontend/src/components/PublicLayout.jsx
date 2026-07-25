@@ -3,7 +3,9 @@ import HappeningTonightBanner from './HappeningTonightBanner'
 import WhatsAppButton from './WhatsAppButton'
 
 const navLinkClass = ({ isActive }) =>
-  `text-sm font-medium transition hover:text-gold ${isActive ? 'text-gold' : 'text-white/80'}`
+  `text-sm font-medium transition hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold rounded px-2 py-1 ${
+    isActive ? 'text-gold' : 'text-white/80'
+  }`
 
 export default function PublicLayout() {
   return (
@@ -11,18 +13,28 @@ export default function PublicLayout() {
       <HappeningTonightBanner />
 
       <header className="border-b border-white/10 bg-tavern-800/60 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <NavLink to="/" className="text-lg font-bold tracking-wide text-gold">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4" aria-label="Main navigation">
+          <NavLink to="/" className="text-lg font-bold tracking-wide text-gold focus:outline-none focus:ring-2 focus:ring-gold rounded">
             109 TAVERN
           </NavLink>
           <div className="flex gap-6">
-            <NavLink to="/restaurant" className={navLinkClass}>Restaurant</NavLink>
-            <NavLink to="/carwash" className={navLinkClass}>Carwash</NavLink>
-            <NavLink to="/barbershop" className={navLinkClass}>Barbershop</NavLink>
-            <NavLink to="/events" className={navLinkClass}>Events</NavLink>
-            <NavLink to="/bundles" className={navLinkClass}>Bundles</NavLink>
+            <NavLink to="/restaurant" className={navLinkClass}>
+              Restaurant
+            </NavLink>
+            <NavLink to="/carwash" className={navLinkClass}>
+              Carwash
+            </NavLink>
+            <NavLink to="/barbershop" className={navLinkClass}>
+              Barbershop
+            </NavLink>
+            <NavLink to="/events" className={navLinkClass}>
+              Events
+            </NavLink>
+            <NavLink to="/bundles" className={navLinkClass}>
+              Bundles
+            </NavLink>
           </div>
-          <WhatsAppButton className="hidden sm:inline-flex" />
+          <WhatsAppButton className="hidden sm:inline-flex" aria-label="Contact via WhatsApp" />
         </nav>
       </header>
 
