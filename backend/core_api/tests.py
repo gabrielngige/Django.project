@@ -1,6 +1,7 @@
-import importlib
+import importlib.util
 import pytest
 from decimal import Decimal
+from pathlib import Path
 from django.utils import timezone
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
@@ -13,12 +14,7 @@ from core_api.models import (
 
 
 def test_test_settings_database_uses_environment_overrides(monkeypatch):
-    from tavern_core import test_settings
-
-    original_database_settings = {
-        key: test_settings.DATABASES['default'][key]
-        for key in ('ENGINE', 'NAME', 'USER', 'PASSWORD', 'HOST', 'PORT')
-    }
+    settings_path = Path(__file__).resolve().parent.parent / 'tavern_core' / 'test_settings.py'
 
     with monkeypatch.context() as patched_env:
         patched_env.setenv('DB_NAME', 'ci_db')
@@ -27,9 +23,12 @@ def test_test_settings_database_uses_environment_overrides(monkeypatch):
         patched_env.setenv('DB_HOST', 'db-service')
         patched_env.setenv('DB_PORT', '5432')
 
-        reloaded_settings = importlib.reload(test_settings)
+        module_spec = importlib.util.spec_from_file_location('test_settings_for_ci', settings_path)
+        test_settings_module = importlib.util.module_from_spec(module_spec)
+        assert module_spec.loader is not None
+        module_spec.loader.exec_module(test_settings_module)
 
-        assert reloaded_settings.DATABASES['default'] == {
+        assert test_settings_module.DATABASES['default'] == {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'ci_db',
             'USER': 'ci_user',
@@ -37,12 +36,6 @@ def test_test_settings_database_uses_environment_overrides(monkeypatch):
             'HOST': 'db-service',
             'PORT': '5432',
         }
-
-    restored_settings = importlib.reload(test_settings)
-    assert {
-        key: restored_settings.DATABASES['default'][key]
-        for key in original_database_settings
-    } == original_database_settings
 
 
 @pytest.fixture
