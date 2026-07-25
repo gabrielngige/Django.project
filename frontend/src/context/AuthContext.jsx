@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { login as apiLogin, logout as apiLogout } from '../api/endpoints'
-import { tokenStore } from '../api/client'
 import { AuthContext } from './auth-context'
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(tokenStore.getAccess()))
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [error, setError] = useState(null)
 
   async function login(username, password) {
@@ -19,8 +18,12 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function logout() {
-    apiLogout()
+  async function logout() {
+    try {
+      await apiLogout()
+    } catch {
+      // Logout on client side even if API call fails
+    }
     setIsAuthenticated(false)
   }
 

@@ -4,6 +4,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .content_studio import generate_poster_image
 from .models import (
@@ -24,6 +25,92 @@ from .serializers import (
     PosterSerializer,
     SocialEngagementLogSerializer,
 )
+
+
+class SecureTokenObtainPairView(TokenObtainPairView):
+    """Custom token view that sets JWT tokens in httpOnly cookies."""
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 200:
+            access_token = response.data.get('access')
+            refresh_token = response.data.get('refresh')
+
+            # Set tokens in httpOnly cookies
+            response.set_cookie(
+                'access_token',
+                access_token,
+                max_age=8 * 3600,  # 8 hours
+                httponly=True,
+                secure=True,
+                samesite='Strict',
+            )
+            response.set_cookie(
+                'refresh_token',
+                refresh_token,
+                max_age=7 * 24 * 3600,  # 7 days
+                httponly=True,
+                secure=True,
+                samesite='Strict',
+            )
+
+            # Don't return tokens in response body for security
+            response.data = {'detail': 'Login successful'}
+
+        return response
+
+
+class SecureTokenRefreshView(TokenRefreshView):
+    """Custom refresh token view that uses httpOnly cookies."""
+
+    def post(self, request, *args, **kwargs):
+        # Get refresh token from cookie instead of request body
+        refresh_token = request.COOKIES.get('refresh_token')
+
+        if refresh_token:
+            request.data['refresh'] = refresh_token
+
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 200:
+            access_token = response.data.get('access')
+            refresh_token = response.data.get('refresh', refresh_token)
+
+            # Update access token cookie
+            response.set_cookie(
+                'access_token',
+                access_token,
+                max_age=8 * 3600,
+                httponly=True,
+                secure=True,
+                samesite='Strict',
+            )
+
+            # Optionally update refresh token
+            if refresh_token:
+                response.set_cookie(
+                    'refresh_token',
+                    refresh_token,
+                    max_age=7 * 24 * 3600,
+                    httponly=True,
+                    secure=True,
+                    samesite='Strict',
+                )
+
+            response.data = {'detail': 'Token refreshed'}
+
+        return response
+
+
+class LogoutView(APIView):
+    """Clear authentication cookies."""
+
+    def post(self, request):
+        response = Response({'detail': 'Logged out successfully'})
+        response.delete_cookie('access_token')
+        response.delete_cookie('refresh_token')
+        return response
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):
