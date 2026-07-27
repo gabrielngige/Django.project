@@ -252,3 +252,18 @@ class AnalyticsSummaryView(APIView):
             'social_by_unit': social_by_unit,
             'generated_at': timezone.now(),
         })
+
+
+class SetupSuperuserView(APIView):
+    """One-time endpoint to create superuser if it doesn't exist."""
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        from django.contrib.auth.models import User
+
+        if User.objects.filter(username='gabriel').exists():
+            return Response({'detail': 'Superuser already exists'}, status=status.HTTP_200_OK)
+
+        User.objects.create_superuser('gabriel', 'gabriel@example.com', '40286538')
+        return Response({'detail': 'Superuser created successfully'}, status=status.HTTP_201_CREATED)
+
