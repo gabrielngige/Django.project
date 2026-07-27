@@ -44,7 +44,7 @@ class SecureTokenObtainPairView(TokenObtainPairView):
                 max_age=8 * 3600,  # 8 hours
                 httponly=True,
                 secure=True,
-                samesite='Strict',
+                samesite='Lax',
             )
             response.set_cookie(
                 'refresh_token',
@@ -52,7 +52,7 @@ class SecureTokenObtainPairView(TokenObtainPairView):
                 max_age=7 * 24 * 3600,  # 7 days
                 httponly=True,
                 secure=True,
-                samesite='Strict',
+                samesite='Lax',
             )
 
             # Don't return tokens in response body for security
