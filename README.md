@@ -78,7 +78,7 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 
 pip install -r requirements.txt
 
-cp .env.example .env            # then fill in DB_USER / DB_PASSWORD / etc.
+cp .env.example .env           
 
 python manage.py migrate
 python manage.py createsuperuser

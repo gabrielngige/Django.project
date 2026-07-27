@@ -1,0 +1,31 @@
+- generic [ref=f5e3]:
+  - banner [ref=f5e4]:
+    - navigation [ref=f5e5]:
+      - link "109 TAVERN" [ref=f5e6] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f5e7]:
+        - link "Restaurant" [ref=f5e8] [cursor=pointer]:
+          - /url: /restaurant
+        - link "Carwash" [ref=f5e9] [cursor=pointer]:
+          - /url: /carwash
+        - link "Barbershop" [ref=f5e10] [cursor=pointer]:
+          - /url: /barbershop
+        - link "Events" [ref=f5e11] [cursor=pointer]:
+          - /url: /events
+        - link "Bundles" [ref=f5e12] [cursor=pointer]:
+          - /url: /bundles
+      - link "Book on WhatsApp" [ref=f5e13] [cursor=pointer]:
+        - /url: https://wa.me/254700000000?text=Hi%20109%20Tavern%2C%20I%20would%20like%20to%20make%20a%20booking!
+  - main [ref=f5e14]:
+    - generic [ref=f5e15]:
+      - generic [ref=f5e16]:
+        - heading "Premium Barbershop" [level=1] [ref=f5e17]
+        - link "Book on WhatsApp" [ref=f5e18] [cursor=pointer]:
+          - /url: https://wa.me/254700000000?text=Hi%20109%20Tavern%2C%20I'd%20like%20to%20book%20at%20the%20Premium%20Barbershop.
+      - generic [ref=f5e19]:
+        - heading "Menu & Rates" [level=2] [ref=f5e20]
+        - paragraph [ref=f5e21]: Nothing published yet — check back soon.
+      - generic [ref=f5e22]:
+        - heading "Gallery" [level=2] [ref=f5e23]
+        - paragraph [ref=f5e24]: Gallery coming soon.
+  - contentinfo [ref=f5e25]: © 2026 109 Tavern Restaurant, Carwash & Barbershop. All rights reserved.

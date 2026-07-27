@@ -1,0 +1,45 @@
+- generic [ref=f4e3]:
+  - banner [ref=f4e4]:
+    - navigation [ref=f4e5]:
+      - link "109 TAVERN" [ref=f4e6] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f4e7]:
+        - link "Restaurant" [ref=f4e8] [cursor=pointer]:
+          - /url: /restaurant
+        - link "Carwash" [ref=f4e9] [cursor=pointer]:
+          - /url: /carwash
+        - link "Barbershop" [ref=f4e10] [cursor=pointer]:
+          - /url: /barbershop
+        - link "Events" [ref=f4e11] [cursor=pointer]:
+          - /url: /events
+        - link "Bundles" [ref=f4e12] [cursor=pointer]:
+          - /url: /bundles
+      - link "Book on WhatsApp" [ref=f4e13] [cursor=pointer]:
+        - /url: https://wa.me/254700000000?text=Hi%20109%20Tavern%2C%20I%20would%20like%20to%20make%20a%20booking!
+  - main [ref=f4e14]:
+    - generic [ref=f4e15]:
+      - generic [ref=f4e16]:
+        - heading "One address. Three reasons to stay." [level=1] [ref=f4e17]
+        - paragraph [ref=f4e18]: 109 Tavern is Nairobi's lifestyle hub — restaurant, carwash, and barbershop under one roof. Come for one, stay for the ecosystem.
+        - generic [ref=f4e19]:
+          - link "See Cross-Unit Bundles" [ref=f4e20] [cursor=pointer]:
+            - /url: /bundles
+          - link "Book on WhatsApp" [ref=f4e21] [cursor=pointer]:
+            - /url: https://wa.me/254700000000?text=Hi%20109%20Tavern%2C%20I%20would%20like%20to%20make%20a%20booking!
+      - generic [ref=f4e23]:
+        - link "Restaurant & Entertainment Nyama choma, cocktails, and themed nights — Rhumba, Karaoke, Live Band. Explore →" [ref=f4e24] [cursor=pointer]:
+          - /url: /restaurant
+          - heading "Restaurant & Entertainment" [level=2] [ref=f4e25]
+          - paragraph [ref=f4e26]: Nyama choma, cocktails, and themed nights — Rhumba, Karaoke, Live Band.
+          - generic [ref=f4e27]: Explore →
+        - link "Premium Carwash Fast, thorough cleans while you dine or get groomed next door. Explore →" [ref=f4e28] [cursor=pointer]:
+          - /url: /carwash
+          - heading "Premium Carwash" [level=2] [ref=f4e29]
+          - paragraph [ref=f4e30]: Fast, thorough cleans while you dine or get groomed next door.
+          - generic [ref=f4e31]: Explore →
+        - link "Premium Barbershop Precision styling and grooming packages, with before & after proof. Explore →" [ref=f4e32] [cursor=pointer]:
+          - /url: /barbershop
+          - heading "Premium Barbershop" [level=2] [ref=f4e33]
+          - paragraph [ref=f4e34]: Precision styling and grooming packages, with before & after proof.
+          - generic [ref=f4e35]: Explore →
+  - contentinfo [ref=f4e36]: © 2026 109 Tavern Restaurant, Carwash & Barbershop. All rights reserved.
