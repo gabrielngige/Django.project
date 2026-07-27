@@ -7,6 +7,20 @@ const api = axios.create({
   withCredentials: true, // Include cookies in requests
 })
 
+// Add Authorization header with token from localStorage
+api.interceptors.request.use((config) => {
+  const tokens = localStorage.getItem('tokens')
+  if (tokens) {
+    try {
+      const { access } = JSON.parse(tokens)
+      config.headers.Authorization = `Bearer ${access}`
+    } catch {
+      // Token parsing failed, continue without token
+    }
+  }
+  return config
+})
+
 let refreshPromise = null
 
 api.interceptors.response.use(
@@ -18,21 +32,35 @@ api.interceptors.response.use(
       config._retried = true
 
       try {
+        const tokens = localStorage.getItem('tokens')
+        if (!tokens) throw new Error('No tokens')
+
+        const { refresh } = JSON.parse(tokens)
+
         if (!refreshPromise) {
           refreshPromise = axios.post(
             `${API_BASE_URL}/auth/token/refresh/`,
-            {},
+            { refresh },
             { withCredentials: true }
-          ).finally(() => {
+          ).then((res) => {
+            // Update tokens with new access token
+            const oldTokens = JSON.parse(localStorage.getItem('tokens') || '{}')
+            localStorage.setItem('tokens', JSON.stringify({
+              ...oldTokens,
+              access: res.data.access,
+            }))
+            return res
+          }).finally(() => {
             refreshPromise = null
           })
         }
 
         await refreshPromise
-        // Token is now in cookie, retry the request
+        // Token is now updated, retry the request
         return api(config)
       } catch {
         // Refresh failed, redirect to login
+        localStorage.removeItem('tokens')
         window.location.href = '/hub/login'
       }
     }

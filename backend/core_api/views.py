@@ -55,8 +55,12 @@ class SecureTokenObtainPairView(TokenObtainPairView):
                 samesite='Lax',
             )
 
-            # Don't return tokens in response body for security
-            response.data = {'detail': 'Login successful'}
+            # Also return tokens in response body for clients on different domains
+            response.data = {
+                'detail': 'Login successful',
+                'access': access_token,
+                'refresh': refresh_token,
+            }
 
         return response
 
@@ -84,7 +88,7 @@ class SecureTokenRefreshView(TokenRefreshView):
                 max_age=8 * 3600,
                 httponly=True,
                 secure=True,
-                samesite='Strict',
+                samesite='Lax',
             )
 
             # Optionally update refresh token
@@ -95,10 +99,15 @@ class SecureTokenRefreshView(TokenRefreshView):
                     max_age=7 * 24 * 3600,
                     httponly=True,
                     secure=True,
-                    samesite='Strict',
+                    samesite='Lax',
                 )
 
-            response.data = {'detail': 'Token refreshed'}
+            # Return tokens in response body too
+            response.data = {
+                'detail': 'Token refreshed',
+                'access': access_token,
+                'refresh': refresh_token,
+            }
 
         return response
 
