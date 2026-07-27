@@ -15,6 +15,8 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
+RUN chmod +x entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 tavern_core.wsgi:application --workers 3"]
+CMD ["sh", "entrypoint.sh"]

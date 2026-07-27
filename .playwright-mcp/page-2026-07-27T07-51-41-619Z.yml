@@ -1,0 +1,21 @@
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#content-start"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Django administration" [ref=e7] [cursor=pointer]:
+          - /url: /admin/
+        - 'button "Toggle theme (current theme: auto) Toggle theme (current theme: light) Toggle theme (current theme: dark)" [ref=e8]':
+          - generic [ref=e9]: "Toggle theme (current theme: auto)"
+          - generic [ref=e10]: "Toggle theme (current theme: light)"
+          - generic [ref=e11]: "Toggle theme (current theme: dark)"
+    - main [ref=e19]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - text: "Username:"
+          - textbox "Username:" [active] [ref=e24]
+        - generic [ref=e25]:
+          - text: "Password:"
+          - textbox "Password:" [ref=e26]
+        - button "Log in" [ref=e28]

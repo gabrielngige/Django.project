@@ -127,6 +127,7 @@ CORS_ALLOWED_ORIGINS = config(
     default='http://localhost:5173,http://127.0.0.1:5173',
     cast=Csv(),
 )
+CORS_ALLOW_CREDENTIALS = True
 
 # Business config used by the public site / WhatsApp click-to-chat links.
 TAVERN_WHATSAPP_NUMBER = config('TAVERN_WHATSAPP_NUMBER', default='254700000000')

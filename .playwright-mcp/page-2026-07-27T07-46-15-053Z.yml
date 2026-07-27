@@ -1,0 +1,16 @@
+- form [ref=e4]:
+  - heading "109 Tavern Ops Hub" [level=1] [ref=e5]
+  - paragraph [ref=e6]: Staff sign-in
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: Username *
+      - textbox "Username required" [ref=e10]:
+        - /placeholder: Enter your username
+        - text: gabriel
+    - generic [ref=e11]:
+      - generic [ref=e12]: Password *
+      - textbox "Password required" [ref=e13]:
+        - /placeholder: Enter your password
+        - text: "40286538"
+  - alert [ref=e15]: Invalid username or password.
+  - button "Sign in" [ref=e14]
