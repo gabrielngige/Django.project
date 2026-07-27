@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/hub/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}
